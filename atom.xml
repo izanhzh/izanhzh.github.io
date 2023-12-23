@@ -6,7 +6,7 @@
   <link href="https://izanhzh.github.io/atom.xml" rel="self"/>
   
   <link href="https://izanhzh.github.io/"/>
-  <updated>2023-12-23T02:32:40.197Z</updated>
+  <updated>2023-12-23T02:46:27.351Z</updated>
   <id>https://izanhzh.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://izanhzh.github.io/2023/12/15/a747d13f/"/>
     <id>https://izanhzh.github.io/2023/12/15/a747d13f/</id>
     <published>2023-12-15T00:57:56.000Z</published>
-    <updated>2023-12-23T02:32:40.197Z</updated>
+    <updated>2023-12-23T02:46:27.351Z</updated>
     
     <content type="html"><![CDATA[<p>Jenkins的授权策略有非常多种，我习惯用基于角色的授权策略，这里记录下配置的一些细节。</p><blockquote><p>我使用的Jenkins版本：2.375.2</p></blockquote><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>进入插件安装页面：<code>Dashboard → Manage Jenkins → Plugin Manager → Available plugins</code>，搜索 “Role-based”，选择 <code>Role-based Authorization Strategy</code> 插件，点击 <code>Download now and install after restart</code> 进行安装。</p><p><img src="/images/posts/a747d13f/install_plugin.png" alt="安装插件"></p><h3 id="配置授权策略"><a href="#配置授权策略" class="headerlink" title="配置授权策略"></a>配置授权策略</h3><p>进入配置全局安全页面：<code>Dashboard → Manage Jenkins → Configure Global Security</code>, 修改 <code>Authorization</code> 配置，选择 <code>Role-Base Strategy</code>，点击 <code>Apply</code> 按钮应用配置。</p><p><img src="/images/posts/a747d13f/configure_global_security.png" alt="配置授权策略"></p><h3 id="创建角色"><a href="#创建角色" class="headerlink" title="创建角色"></a>创建角色</h3><p>插件提供了三种类型的角色。</p><table><thead><tr><th>类型</th><th>备注</th></tr></thead><tbody><tr><td>全局角色（Global roles）</td><td>适用于管理员，可以跨越全部项目进行授权</td></tr><tr><td>项目角色（Item roles）</td><td>适用于给用户按项目分配权限的场景</td></tr><tr><td>节点角色（Agent roles）</td><td>适用于集群管理，对节点进行分配权限（<em>我还没有实践过，查资料得到的结论</em>）</td></tr></tbody></table><blockquote><p>全局角色的权限会覆盖项目角色的权限，如果一个用户给了全局权限，即使项目权限没有给，该用户也会拥有该权限。并且由于全局角色是跨越全部项目的，如果设置不得当，会让用户不受项目角色控制，可以操作全部项目。</p></blockquote><h4 id="创建全局角色"><a href="#创建全局角色" class="headerlink" title="创建全局角色"></a>创建全局角色</h4><p>进入配置页面：<code>Dashboard → Manage Jenkins → Manage and Assign Roles → Manage Roles</code>，找到 <code>Global roles</code> 配置。</p><p><img src="/images/posts/a747d13f/manage_global_roles_1.png" alt="配置全局角色步骤1"></p><p><img src="/images/posts/a747d13f/manage_global_roles_2.png" alt="配置全局角色步骤2"></p><blockquote><p>对于管理员，建议直接勾选 <code>Overall | Administer</code></p><p>对于一般的用户，希望按项目管理权限是，建议只勾选 <code>Overall | Read</code> ，其他的都不要勾选，如果不勾选 <code>Overall | Read</code>，用户登录后会显示空白页面，啥操作都做不了</p></blockquote><h4 id="创建项目角色"><a href="#创建项目角色" class="headerlink" title="创建项目角色"></a>创建项目角色</h4><p>进入配置页面：<code>Dashboard → Manage Jenkins → Manage and Assign Roles → Manage Roles</code>，找到 <code>Item roles</code> 配置。</p><p><img src="/images/posts/a747d13f/manage_item_roles_1.png" alt="配置项目角色步骤1"></p><p><img src="/images/posts/a747d13f/manage_item_roles_2.png" alt="配置项目角色步骤2"></p><h3 id="分配角色给用户"><a href="#分配角色给用户" class="headerlink" title="分配角色给用户"></a>分配角色给用户</h3><p>进入配置页面：<code>Dashboard → Manage Jenkins → Manage and Assign Roles → Assign Roles</code>。</p><p><img src="/images/posts/a747d13f/assign_roles.png" alt="分配角色给用户"></p><blockquote><p>不能只给用户分配项目角色，必须要分配一个全局角色，全局角色包含 <code>Overall | Read</code> 权限，否则用户登录后会显示空白页面，啥操作都做不了。</p></blockquote>]]></content>
     
